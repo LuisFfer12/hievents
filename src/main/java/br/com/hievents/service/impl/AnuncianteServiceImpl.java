@@ -1,0 +1,115 @@
+package br.com.hievents.service.impl;
+
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Optional;
+
+import org.apache.commons.lang3.StringUtils;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.google.common.reflect.TypeToken;
+
+import br.com.hievents.dto.anunciante.AnuncianteDTO;
+import br.com.hievents.dto.anunciante.AnuncianteResponseDTO;
+import br.com.hievents.entity.anunciante.Anunciante;
+import br.com.hievents.exception.AnuncianteAlreadyExistException;
+import br.com.hievents.exception.AnuncianteNotFoundException;
+import br.com.hievents.exception.EmailAlreadyExistsException;
+import br.com.hievents.repository.anunciante.AnuncianteRepository;
+import br.com.hievents.service.AnuncianteService;
+
+@Service
+public class AnuncianteServiceImpl implements AnuncianteService {
+
+	@Autowired
+	AnuncianteRepository anuncianteRepository;
+	
+	@Override
+	public AnuncianteResponseDTO createAnunciante(AnuncianteDTO requestDTO) {
+		ModelMapper mapper = new ModelMapper();
+		
+		Anunciante anunciante = mapper.map(requestDTO, Anunciante.class);
+		
+		Boolean existsByEmail = anuncianteRepository.existsByEmail(requestDTO.getEmail());
+		
+		if(existsByEmail == true) {
+			throw new EmailAlreadyExistsException();
+		}
+		
+		
+		
+		
+		Anunciante anuncianteSaved = anuncianteRepository.save(anunciante);
+		
+		AnuncianteResponseDTO response = mapper.map(anuncianteSaved, AnuncianteResponseDTO.class);
+		
+		return response;
+	}
+	
+	@Override
+	public AnuncianteResponseDTO getAnunciante(Integer anuncianteId) {
+		ModelMapper mapper = new ModelMapper();
+		
+		Optional<Anunciante> anuncinteOpt = anuncianteRepository.findById(anuncianteId);
+		if(!anuncinteOpt.isPresent()) {
+			throw new AnuncianteNotFoundException();
+		}
+		
+		Anunciante anunciante = anuncinteOpt.get();
+		
+		AnuncianteResponseDTO response = mapper.map(anunciante, AnuncianteResponseDTO.class);
+		
+		return response;
+	}
+	
+	@Override
+	public List<AnuncianteResponseDTO> getAllAnunciantes() {
+		ModelMapper mapper = new ModelMapper();
+		
+		List<Anunciante> anunciantes = anuncianteRepository.findAll();
+		
+		Type listType = new TypeToken<List<AnuncianteResponseDTO>>() {}.getType();
+		List<AnuncianteResponseDTO> response = mapper.map(anunciantes, listType);
+		
+		return response;
+	}
+	
+	
+
+	@Override
+	public AnuncianteResponseDTO editAnunciante(Integer anuncianteId, AnuncianteDTO requestDTO) {
+		ModelMapper mapper = new ModelMapper();
+
+		Optional<Anunciante> anuncianteOpt = anuncianteRepository.findById(anuncianteId);
+
+		if (!anuncianteOpt.isPresent()) {
+			throw new AnuncianteNotFoundException();
+		}
+
+		Anunciante anunciante = anuncianteOpt.get();
+
+		if (!StringUtils.equals(requestDTO.getEmail(), anunciante.getEmail())) {
+			Boolean anuncianteExists = anuncianteRepository.existsByEmail(requestDTO.getEmail());
+			if (anuncianteExists) {
+				throw new AnuncianteAlreadyExistException();
+			}
+		}
+
+		mapper.map(requestDTO, anunciante);
+
+		Anunciante anuncianteSaved = anuncianteRepository.save(anunciante);
+
+		AnuncianteResponseDTO response = mapper.map(anuncianteSaved, AnuncianteResponseDTO.class);
+
+		return response;
+	}
+	
+	@Override
+	public void deleteAnunciante(Integer anuncianteId) {
+		anuncianteRepository.deleteById(anuncianteId);
+	}
+
+
+}
