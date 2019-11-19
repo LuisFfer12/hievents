@@ -36,10 +36,7 @@ public class AnuncianteServiceImpl implements AnuncianteService {
 		
 		if(existsByEmail == true) {
 			throw new EmailAlreadyExistsException();
-		}
-		
-		
-		
+		}	
 		
 		Anunciante anuncianteSaved = anuncianteRepository.save(anunciante);
 		

@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS `hievents`.`evento` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`nome` VARCHAR(255) NOT NULL,
+	`endereco`VARCHAR(255) NOT NULL,
+	`data`DATE NOT NULL,
+	`horario`VARCHAR(100) NOT NULL,
+	PRIMARY KEY(`id`))
+ ENGINE=InnoDB;

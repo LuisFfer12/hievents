@@ -18,7 +18,8 @@ public enum ErrorResponseEnum implements ErrorResponse {
 	INVALID_VALUE_PARAMETER(HttpStatus.BAD_REQUEST, "ERR002", "Invalid value parameter"),
 	PARSE_DATE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "ERR003", "Cannot parse date"),
 	ANUNCIANTE_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "ERR006", "Anunciante Not Found"),
-	ANUNCIANTE_ALREADY_EXIST(HttpStatus.INTERNAL_SERVER_ERROR, "ERR007", "Anunciante Already Exist");
+	ANUNCIANTE_ALREADY_EXIST(HttpStatus.INTERNAL_SERVER_ERROR, "ERR007", "Anunciante Already Exist"),
+	EVENTO_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "ERR008", "Event already Exists");
 	
 	
 	private final HttpStatus httpStatus;

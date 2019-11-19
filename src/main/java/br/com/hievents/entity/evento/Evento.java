@@ -1,5 +1,7 @@
 package br.com.hievents.entity.evento;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.hievents.entity.anunciante.Anunciante;
 import lombok.AllArgsConstructor;
@@ -25,8 +29,9 @@ public class Evento {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private String local;
-	private String data;
+	private String endereco;
+	@JsonFormat(pattern="dd/MM/yyyy")
+	private Date data;
 	private String horario;
 
 	@ManyToOne

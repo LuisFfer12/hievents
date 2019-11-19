@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import br.com.hievents.dto.evento.EventoDTO;
 import br.com.hievents.dto.evento.EventoResponseDTO;
 import br.com.hievents.entity.evento.Evento;
+import br.com.hievents.exception.EventoAlreadyExistsException;
 import br.com.hievents.repository.evento.EventoRepository;
 import br.com.hievents.service.EventoService;
 
@@ -20,10 +21,15 @@ public class EventoServiceImpl implements EventoService {
 	public EventoResponseDTO createEvento(EventoDTO requestDTO) {
 		ModelMapper mapper = new ModelMapper();
 		Evento even = mapper.map(requestDTO, Evento.class);
-		Evento evento = eventoRepository.save(even);
-		EventoResponseDTO resp = mapper.map(evento, EventoResponseDTO.class);
-		return resp;
-		
+		Boolean existeEvento =  (Boolean) eventoRepository.buscaEnderecoData(requestDTO.getEndereco(), requestDTO.getData());
+		if(existeEvento == true) {
+			throw new EventoAlreadyExistsException();
+		}
+		Evento eventoSalvo = eventoRepository.save(even);
+		EventoResponseDTO response = mapper.map(eventoSalvo, EventoResponseDTO.class);
+		return response;
 	}
+	
+	
 
 }
