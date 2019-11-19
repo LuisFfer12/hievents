@@ -29,7 +29,7 @@ public class Anunciante {
 	private String telefone;
 	private String email;
 	
-	@OneToMany(mappedBy="anunciante")
+	@OneToMany
 	private List<Evento> evento;
 	
 }

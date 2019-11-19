@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.hievents.entity.anunciante.Anunciante;
@@ -30,13 +32,15 @@ public class Evento {
 	private Integer id;
 	private String nome;
 	private String endereco;
-	@JsonFormat(pattern="dd/MM/yyyy")
+	
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date data;
+	
 	private String horario;
 
-	@ManyToOne
-	@JoinColumn(name="anunciante_id")
-	private Anunciante anunciante;
+//	@ManyToOne
+//	@JoinColumn(name="anunciante_id")
+//	private Anunciante anunciante;
 
 
 }

@@ -10,7 +10,7 @@ import br.com.hievents.entity.evento.Evento;
 
 public interface EventoRepository extends JpaRepository<Evento, Long> {
 	
-	@Query(value="Select u from Evento u where u.endereco=:pendereco, u.data=:pdata ")
-	boolean buscaEnderecoData(@Param("pendereco") String endereco, @Param("pdata") Date data);
+	@Query(value="select count(*) from evento where endereco = :endereco and data = :data",nativeQuery = true)
+	Integer buscaEnderecoData(@Param("endereco") String endereco, @Param("data") Date data);
 
 }

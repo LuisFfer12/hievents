@@ -21,8 +21,8 @@ public class EventoServiceImpl implements EventoService {
 	public EventoResponseDTO createEvento(EventoDTO requestDTO) {
 		ModelMapper mapper = new ModelMapper();
 		Evento even = mapper.map(requestDTO, Evento.class);
-		Boolean existeEvento =  (Boolean) eventoRepository.buscaEnderecoData(requestDTO.getEndereco(), requestDTO.getData());
-		if(existeEvento == true) {
+		Integer existeEvento = eventoRepository.buscaEnderecoData(requestDTO.getEndereco(), requestDTO.getData());
+		if(existeEvento >0) {
 			throw new EventoAlreadyExistsException();
 		}
 		Evento eventoSalvo = eventoRepository.save(even);

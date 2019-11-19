@@ -12,7 +12,7 @@ public class EventoResponseDTO {
 	private Integer id;
 	private String nome;
 	private String endereco;
-	@JsonFormat(pattern="dd/MM/yyyy")
+	@JsonFormat(pattern="dd-MM-yyyy")
 	private Date data;
 	private String horario;
 
