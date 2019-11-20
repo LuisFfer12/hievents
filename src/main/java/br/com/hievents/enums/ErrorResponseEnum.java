@@ -19,8 +19,8 @@ public enum ErrorResponseEnum implements ErrorResponse {
 	PARSE_DATE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "ERR003", "Cannot parse date"),
 	ANUNCIANTE_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "ERR006", "Anunciante Not Found"),
 	ANUNCIANTE_ALREADY_EXIST(HttpStatus.INTERNAL_SERVER_ERROR, "ERR007", "Anunciante Already Exist"),
-	EVENTO_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "ERR008", "Event already Exists");
-	
+	EVENTO_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "ERR008", "Event already Exists"),
+	EVENTO_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "ERR008", "Evento Not Found");
 	
 	private final HttpStatus httpStatus;
 	private final String code;
