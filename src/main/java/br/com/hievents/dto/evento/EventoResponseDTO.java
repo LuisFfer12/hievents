@@ -4,6 +4,8 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.hievents.dto.anunciante.AnuncianteResponseDTO;
+import br.com.hievents.entity.anunciante.Anunciante;
 import lombok.Data;
 
 @Data
@@ -15,6 +17,8 @@ public class EventoResponseDTO {
 	@JsonFormat(pattern="dd-MM-yyyy")
 	private Date data;
 	private String horario;
+	
+	private AnuncianteResponseDTO anunciante;
 
 
 }

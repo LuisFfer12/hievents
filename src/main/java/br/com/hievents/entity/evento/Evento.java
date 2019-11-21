@@ -38,9 +38,9 @@ public class Evento {
 	
 	private String horario;
 
-//	@ManyToOne
-//	@JoinColumn(name="anunciante_id")
-//	private Anunciante anunciante;
+	@ManyToOne
+	@JoinColumn(name="anunciante_id")
+	private Anunciante anunciante;
 
 
 }

@@ -15,6 +15,8 @@ public class EventoDTO {
 	@JsonFormat(pattern="dd-MM-yyyy")
 	private Date data;
 	private String horario;
+	
+	private Integer anuncianteId;
 
 
 }

@@ -13,9 +13,12 @@ import com.google.common.reflect.TypeToken;
 
 import br.com.hievents.dto.evento.EventoDTO;
 import br.com.hievents.dto.evento.EventoResponseDTO;
+import br.com.hievents.entity.anunciante.Anunciante;
 import br.com.hievents.entity.evento.Evento;
+import br.com.hievents.exception.AnuncianteNotFoundException;
 import br.com.hievents.exception.EventoAlreadyExistsException;
 import br.com.hievents.exception.EventoNotFoundException;
+import br.com.hievents.repository.anunciante.AnuncianteRepository;
 import br.com.hievents.repository.evento.EventoRepository;
 import br.com.hievents.service.EventoService;
 
@@ -24,16 +27,28 @@ public class EventoServiceImpl implements EventoService {
 	
 	@Autowired
 	private EventoRepository eventoRepository;
+	
+	@Autowired
+	private AnuncianteRepository anuncianteRepository;
 
 	@Override
 	public EventoResponseDTO createEvento(EventoDTO requestDTO) {
 		ModelMapper mapper = new ModelMapper();
-		Evento even = mapper.map(requestDTO, Evento.class);
+		Evento evento = mapper.map(requestDTO, Evento.class);
 		Integer existeEvento = eventoRepository.buscaEnderecoData(requestDTO.getEndereco(), requestDTO.getData());
 		if(existeEvento > 0) {
 			throw new EventoAlreadyExistsException();
 		}
-		Evento eventoSalvo = eventoRepository.save(even);
+		
+		Optional<Anunciante> anuncianteOpt = anuncianteRepository.findById(requestDTO.getAnuncianteId());
+		
+		if(!anuncianteOpt.isPresent()) {
+			 throw new AnuncianteNotFoundException();
+		}
+		
+		evento.setAnunciante(anuncianteOpt.get());
+		
+		Evento eventoSalvo = eventoRepository.save(evento);
 		EventoResponseDTO response = mapper.map(eventoSalvo, EventoResponseDTO.class);
 		return response;
 	}
