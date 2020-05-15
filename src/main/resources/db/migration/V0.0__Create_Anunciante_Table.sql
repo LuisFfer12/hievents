@@ -3,8 +3,6 @@ CREATE TABLE IF NOT EXISTS `hievents`.`anunciante` (
 	`nome` VARCHAR(255) NOT NULL,
 	`telefone`VARCHAR(255) NOT NULL,
 	`email`VARCHAR(100) NOT NULL,
-	`senha`VARCHAR(100) NOT NULL,
-	`usuario` VARCHAR(100) NOT NULL,
 	UNIQUE KEY `email_UNIQUE` (`email`),
 	PRIMARY KEY(`id`))
  ENGINE=InnoDB;

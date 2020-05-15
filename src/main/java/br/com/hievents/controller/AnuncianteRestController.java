@@ -24,14 +24,7 @@ public class AnuncianteRestController {
 
 	@Autowired
 	AnuncianteService anuncianteService;
-	
-	
-//	@PostMapping
-//	public ResponseEntity createAnunciante(@RequestBody AnuncianteDTO requestDTO) {
-//		AnuncianteResponseDTO response = anuncianteService.createAnunciante(requestDTO);
-//		return ResponseEntity.ok(response);
-//	}
-	
+		
 	@PutMapping("/{anuncianteId}")
 	public ResponseEntity editAnunciante(@PathVariable("anuncianteId") Integer anuncianteId, @RequestBody AnuncianteDTO requestDTO) {
 		AnuncianteResponseDTO response = anuncianteService.editAnunciante(anuncianteId, requestDTO);
