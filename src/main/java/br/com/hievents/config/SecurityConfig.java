@@ -37,13 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	            .authorizeRequests()
 	                .antMatchers("/anunciante/**")
 	                    .hasRole("USER")
-	                .antMatchers(HttpMethod.GET, "/eventos/**")
-	                    .permitAll()
 	                .antMatchers(HttpMethod.POST, "/eventos")
 	                    .hasRole("USER")
 	                .antMatchers(HttpMethod.POST,"/usuarios/**")
 	                    .permitAll()
-	                .and()
+	                .antMatchers(HttpMethod.GET, "/eventos/**")
+	                    .permitAll()
+	            .and()
 	                .httpBasic();
 	        ;
 	    }

@@ -30,6 +30,7 @@ public class UsuarioServiceImpl implements UserDetailsService {
 		String senhaCriptografada = passwordEncoder.encode(anuncianteDto.getSenha());
 		
 		Anunciante anunciante = mapper.map(anuncianteDto, Anunciante.class);
+		anunciante.setUser("USER");
 		anunciante.setSenha(senhaCriptografada);
 
 		Boolean existsByEmail = anuncianteRepository.existsByEmail(anuncianteDto.getEmail());
