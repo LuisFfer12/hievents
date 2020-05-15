@@ -11,6 +11,8 @@ import br.com.hievents.entity.anunciante.Anunciante;
 public interface AnuncianteRepository extends JpaRepository<Anunciante, Integer> {
 
 	boolean existsByEmail(String email);
+	
+	Optional<Anunciante> findByEmail(String email);
 
 	Optional<Anunciante> findById(Integer anuncianteId);
 

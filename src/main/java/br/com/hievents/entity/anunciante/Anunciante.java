@@ -28,6 +28,8 @@ public class Anunciante {
 	private String nome;
 	private String telefone;
 	private String email;
+	private String senha;
+	private String user;
 	
 	@OneToMany
 	private List<Evento> evento;

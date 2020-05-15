@@ -10,7 +10,7 @@ import br.com.hievents.dto.anunciante.AnuncianteResponseDTO;
 @Service
 public interface AnuncianteService {
 
-	AnuncianteResponseDTO createAnunciante(AnuncianteDTO requestDTO);
+	//AnuncianteResponseDTO createAnunciante(AnuncianteDTO requestDTO);
 
 	AnuncianteResponseDTO editAnunciante(Integer anuncianteId, AnuncianteDTO requestDTO);
 

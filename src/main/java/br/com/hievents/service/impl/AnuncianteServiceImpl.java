@@ -26,24 +26,24 @@ public class AnuncianteServiceImpl implements AnuncianteService {
 	@Autowired
 	AnuncianteRepository anuncianteRepository;
 	
-	@Override
-	public AnuncianteResponseDTO createAnunciante(AnuncianteDTO requestDTO) {
-		ModelMapper mapper = new ModelMapper();
-		
-		Anunciante anunciante = mapper.map(requestDTO, Anunciante.class);
-		
-		Boolean existsByEmail = anuncianteRepository.existsByEmail(requestDTO.getEmail());
-		
-		if(existsByEmail == true) {
-			throw new EmailAlreadyExistsException();
-		}	
-		
-		Anunciante anuncianteSaved = anuncianteRepository.save(anunciante);
-		
-		AnuncianteResponseDTO response = mapper.map(anuncianteSaved, AnuncianteResponseDTO.class);
-		
-		return response;
-	}
+//	@Override
+//	public AnuncianteResponseDTO createAnunciante(AnuncianteDTO requestDTO) {
+//		ModelMapper mapper = new ModelMapper();
+//		
+//		Anunciante anunciante = mapper.map(requestDTO, Anunciante.class);
+//		
+//		Boolean existsByEmail = anuncianteRepository.existsByEmail(requestDTO.getEmail());
+//		
+//		if(existsByEmail == true) {
+//			throw new EmailAlreadyExistsException();
+//		}	
+//		
+//		Anunciante anuncianteSaved = anuncianteRepository.save(anunciante);
+//		
+//		AnuncianteResponseDTO response = mapper.map(anuncianteSaved, AnuncianteResponseDTO.class);
+//		
+//		return response;
+//	}
 	
 	@Override
 	public AnuncianteResponseDTO getAnunciante(Integer anuncianteId) {
