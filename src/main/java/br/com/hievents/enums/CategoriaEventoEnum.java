@@ -3,7 +3,7 @@ package br.com.hievents.enums;
 public enum CategoriaEventoEnum {
 	
 	MUSICAL,
-	CULINÁRIO,
+	CULINARIO,
 	CULTURAL,
 	ESPORTIVO,
 	PALESTRA
