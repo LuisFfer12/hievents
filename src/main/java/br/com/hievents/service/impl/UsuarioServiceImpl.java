@@ -89,8 +89,8 @@ public class UsuarioServiceImpl implements UserDetailsService {
 				.username(anunciante.getEmail())
 				.password(anunciante.getSenha())
 				.roles(anunciante.getUser())
-				.build();
-	}
+				.build();	
+		}
 
 	public void recover(RecoverPasswordDTO requestDTO) {
 		Optional<Anunciante> userOptional = anuncianteRepository.findByEmail(requestDTO.getEmail());
