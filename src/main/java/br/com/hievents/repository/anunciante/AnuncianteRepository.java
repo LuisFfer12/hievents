@@ -1,5 +1,6 @@
 package br.com.hievents.repository.anunciante;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,8 @@ public interface AnuncianteRepository extends JpaRepository<Anunciante, Integer>
 	Optional<Anunciante> findById(Integer anuncianteId);
 
 	void deleteById(Integer anuncianteId);
+
+	List<Anunciante> findAllByRecoveryToken(String token);
 
 
 }

@@ -30,6 +30,7 @@ public class Anunciante {
 	private String email;
 	private String senha;
 	private String user;
+	private String recoveryToken;
 	
 	@OneToMany
 	private List<Evento> evento;

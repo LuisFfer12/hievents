@@ -26,5 +26,12 @@ hievents:
   security:
     encryptionSalt: TopSecret
 
+mail:
+  from: teste@teste.com
+  host: smtp.gmail.com
+  port: 587
+  user: hieventssolutions@gmail.com
+  password: euamocastanhadecaju
+
 
 
