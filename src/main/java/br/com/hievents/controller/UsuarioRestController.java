@@ -1,6 +1,7 @@
 package br.com.hievents.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,5 +21,10 @@ public class UsuarioRestController {
 	public AnuncianteDTO salvarCadastro(@RequestBody AnuncianteDTO anuncianteDTO) {
 		return usuarioServiceImpl.salvar(anuncianteDTO);
 	}
+	
+	@PostMapping("/login")
+    public UserDetails login(@RequestBody AnuncianteDTO request) {
+        return usuarioServiceImpl.loadUserByUsername(request.getEmail(), request.getSenha());
+    }
 
 }

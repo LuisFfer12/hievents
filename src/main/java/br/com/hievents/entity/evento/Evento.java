@@ -37,6 +37,8 @@ public class Evento {
 	private Date data;
 	
 	private String horario;
+	
+	private String banner;
 
 	@ManyToOne
 	@JoinColumn(name="anunciante_id")

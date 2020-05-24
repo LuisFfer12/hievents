@@ -20,7 +20,9 @@ public enum ErrorResponseEnum implements ErrorResponse {
 	ANUNCIANTE_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "ERR006", "Anunciante Not Found"),
 	ANUNCIANTE_ALREADY_EXIST(HttpStatus.INTERNAL_SERVER_ERROR, "ERR007", "Anunciante Already Exist"),
 	EVENTO_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "ERR008", "Event already Exists"),
-	EVENTO_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "ERR008", "Evento Not Found");
+	EVENTO_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "ERR008", "Evento Not Found"),
+	FILE_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERR009", "File not found"),
+	WRONG_EMAIL_OR_PASSWORD(HttpStatus.BAD_REQUEST, "ERR009", "Wrong email or password");
 	
 	private final HttpStatus httpStatus;
 	private final String code;

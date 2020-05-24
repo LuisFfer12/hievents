@@ -2,7 +2,12 @@ package br.com.hievents.controller;
 
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.hievents.dto.evento.EventoDTO;
 import br.com.hievents.dto.evento.EventoResponseDTO;
@@ -47,6 +54,24 @@ public class EventoRestController {
 	public ResponseEntity editEventos(@PathVariable("eventoId") Integer eventoId, @RequestBody EventoDTO requestDTO) {
 		EventoResponseDTO response = eventoService.editEvento(eventoId, requestDTO);
 		return ResponseEntity.ok(response);
+	}
+	
+	@PutMapping("/uploadBanner/{eventoId}")
+	public ResponseEntity uploadBannerEvento(@PathVariable("eventoId") Integer eventoId,  @RequestParam("banner") MultipartFile banner) {
+		EventoResponseDTO response = eventoService.uploadBannerEvento(eventoId, banner);
+		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping("/downloadBanner/{filename}")
+	public ResponseEntity downloadBanner(@PathVariable("filename") String filename) {
+		Resource response = eventoService.downloadBanner(filename);
+		MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
+		String mimeType = mimeTypesMap.getContentType(filename);
+		
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(mimeType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + response.getFilename() + "\"")
+                .body(response);
 	}
 	
 	@DeleteMapping("/{eventoId}")

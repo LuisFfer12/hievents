@@ -10,9 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.hievents.dto.anunciante.AnuncianteDTO;
-import br.com.hievents.dto.anunciante.AnuncianteResponseDTO;
 import br.com.hievents.entity.anunciante.Anunciante;
 import br.com.hievents.exception.EmailAlreadyExistsException;
+import br.com.hievents.exception.WrongEmailOrPasswordException;
 import br.com.hievents.repository.anunciante.AnuncianteRepository;
 
 @Service
@@ -44,11 +44,16 @@ public class UsuarioServiceImpl implements UserDetailsService {
 
 	}
 
-	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email, String senha) throws UsernameNotFoundException {
 		Anunciante anunciante = anuncianteRepository
 				.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuario nao encontrado"));
+		
+		boolean match = passwordEncoder.matches(senha, anunciante.getSenha());
+		
+		if(!match) {
+			throw new WrongEmailOrPasswordException();
+		}
 				 
 		return User
 				.builder()
@@ -58,4 +63,10 @@ public class UsuarioServiceImpl implements UserDetailsService {
 				.build();
 	}
 
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

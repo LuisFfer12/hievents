@@ -2,7 +2,9 @@ package br.com.hievents.service;
 
 import java.util.List;
 
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.hievents.dto.evento.EventoDTO;
 import br.com.hievents.dto.evento.EventoResponseDTO;
@@ -19,4 +21,8 @@ public interface EventoService {
 	EventoResponseDTO editEvento(Integer eventoId, EventoDTO requestDTO);
 
 	void deleteEvento(Integer eventoId);
+
+	EventoResponseDTO uploadBannerEvento(Integer eventoId, MultipartFile banner);
+
+	Resource downloadBanner(String filename);
 }

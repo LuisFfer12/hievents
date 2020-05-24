@@ -1,13 +1,20 @@
 package br.com.hievents.service.impl;
 
+import java.io.File;
 import java.lang.reflect.Type;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.reflect.TypeToken;
 
@@ -18,9 +25,11 @@ import br.com.hievents.entity.evento.Evento;
 import br.com.hievents.exception.AnuncianteNotFoundException;
 import br.com.hievents.exception.EventoAlreadyExistsException;
 import br.com.hievents.exception.EventoNotFoundException;
+import br.com.hievents.exception.FileNotFoundException;
 import br.com.hievents.repository.anunciante.AnuncianteRepository;
 import br.com.hievents.repository.evento.EventoRepository;
 import br.com.hievents.service.EventoService;
+import br.com.hievents.utils.FileUtil;
 
 @Service
 public class EventoServiceImpl implements EventoService {
@@ -30,6 +39,8 @@ public class EventoServiceImpl implements EventoService {
 	
 	@Autowired
 	private AnuncianteRepository anuncianteRepository;
+	
+	private Path fileStorageLocation = null;
 
 	@Override
 	public EventoResponseDTO createEvento(EventoDTO requestDTO) {
@@ -103,5 +114,51 @@ public class EventoServiceImpl implements EventoService {
 		eventoRepository.deleteById(eventoId);
 		}
 	}
+
+	@Override
+	public EventoResponseDTO uploadBannerEvento(Integer eventoId, MultipartFile banner) {
+		ModelMapper mapper = new ModelMapper();
+		mapper.getConfiguration().setAmbiguityIgnored(true);
+
+		File file = null;
+		try {
+			file = FileUtil.convert(banner);
+		} catch(Exception ignored) {
+
+		}
+		
+		Optional<Evento> eventoOpt = eventoRepository.findById(eventoId);
+		if (!eventoOpt.isPresent()) {
+			throw new EventoNotFoundException();
+		}
+		
+		eventoOpt.get().setBanner(file.getName());
+		Evento eventoSaved = eventoRepository.save(eventoOpt.get());
+		EventoResponseDTO response = mapper.map(eventoSaved, EventoResponseDTO.class);
+		
+		return response;
+	}
+
+	@Override
+	public Resource downloadBanner(String filename) {
+		Resource resource = loadFileAsResource(filename);
+		return resource;
+	}
+	
+	public Resource loadFileAsResource(String fileName) {
+        try {
+        	this.fileStorageLocation = Paths.get("/usr/src/mymaven/")
+                    .toAbsolutePath().normalize();
+        	 Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+             Resource resource = new UrlResource(filePath.toUri());
+            if(resource.exists()) {
+                return resource;
+            } else {
+                throw new FileNotFoundException();
+            }
+        } catch (MalformedURLException ex) {
+            throw new FileNotFoundException();
+        }
+    }
 
 }

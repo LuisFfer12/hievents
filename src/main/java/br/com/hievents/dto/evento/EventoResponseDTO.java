@@ -17,7 +17,7 @@ public class EventoResponseDTO {
 	@JsonFormat(pattern="dd-MM-yyyy")
 	private Date data;
 	private String horario;
-	
+	private String banner;
 	private AnuncianteResponseDTO anunciante;
 
 
