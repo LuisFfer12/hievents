@@ -68,6 +68,21 @@ public class UsuarioServiceImpl implements UserDetailsService {
 		if(!match) {
 			throw new WrongEmailOrPasswordException();
 		}
+		
+		return User
+				.builder()
+				.username(anunciante.getEmail())
+				.password(anunciante.getSenha())
+				.roles(anunciante.getUser())
+				.build();
+
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Anunciante anunciante = anuncianteRepository
+				.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("Usuario nao encontrado"));
 				 
 		return User
 				.builder()
@@ -75,12 +90,6 @@ public class UsuarioServiceImpl implements UserDetailsService {
 				.password(anunciante.getSenha())
 				.roles(anunciante.getUser())
 				.build();
-	}
-
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public void recover(RecoverPasswordDTO requestDTO) {
@@ -126,5 +135,6 @@ public class UsuarioServiceImpl implements UserDetailsService {
 
 		return resetPasswordResponseDTO;
 	}
+
 	
 }

@@ -8,6 +8,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EnumType;
+
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,9 @@ import br.com.hievents.dto.evento.EventoDTO;
 import br.com.hievents.dto.evento.EventoResponseDTO;
 import br.com.hievents.entity.anunciante.Anunciante;
 import br.com.hievents.entity.evento.Evento;
+import br.com.hievents.enums.CategoriaEventoEnum;
 import br.com.hievents.exception.AnuncianteNotFoundException;
+import br.com.hievents.exception.CategoriaDoesntExists;
 import br.com.hievents.exception.EventoAlreadyExistsException;
 import br.com.hievents.exception.EventoNotFoundException;
 import br.com.hievents.exception.FileNotFoundException;
@@ -47,8 +52,17 @@ public class EventoServiceImpl implements EventoService {
 		ModelMapper mapper = new ModelMapper();
 		Evento evento = mapper.map(requestDTO, Evento.class);
 		Integer existeEvento = eventoRepository.buscaEnderecoData(requestDTO.getEndereco(), requestDTO.getData());
+		
+		
+		
 		if(existeEvento > 0) {
 			throw new EventoAlreadyExistsException();
+		}
+		
+		if(EnumUtils.isValidEnum(CategoriaEventoEnum.class, requestDTO.getCategoria())) {
+			evento.setCategoria(CategoriaEventoEnum.valueOf(requestDTO.getCategoria()));
+		} else {
+			throw new CategoriaDoesntExists();
 		}
 		
 		Optional<Anunciante> anuncianteOpt = anuncianteRepository.findById(requestDTO.getAnuncianteId());

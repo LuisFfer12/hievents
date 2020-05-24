@@ -22,7 +22,8 @@ public enum ErrorResponseEnum implements ErrorResponse {
 	EVENTO_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "ERR008", "Event already Exists"),
 	EVENTO_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "ERR008", "Evento Not Found"),
 	FILE_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERR009", "File not found"),
-	WRONG_EMAIL_OR_PASSWORD(HttpStatus.BAD_REQUEST, "ERR009", "Wrong email or password");
+	WRONG_EMAIL_OR_PASSWORD(HttpStatus.BAD_REQUEST, "ERR009", "Wrong email or password"),
+	CATEGORIA_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "ERR0018", "Category doesn't exists");
 	
 	private final HttpStatus httpStatus;
 	private final String code;

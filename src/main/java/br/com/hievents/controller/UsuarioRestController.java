@@ -19,6 +19,7 @@ public class UsuarioRestController {
 
 	@Autowired
 	private UsuarioServiceImpl usuarioServiceImpl;
+	
 
 	@PostMapping
 	public AnuncianteDTO salvarCadastro(@RequestBody AnuncianteDTO anuncianteDTO) {
@@ -27,7 +28,8 @@ public class UsuarioRestController {
 	
 	@PostMapping("/login")
     public UserDetails login(@RequestBody AnuncianteDTO request) {
-        return usuarioServiceImpl.loadUserByUsername(request.getEmail(), request.getSenha());
+		
+        return usuarioServiceImpl.loadUserByUsername(request.getEmail());
     }
 	
 	@PostMapping("/recover")

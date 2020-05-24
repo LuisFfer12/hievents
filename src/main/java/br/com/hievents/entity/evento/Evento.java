@@ -3,6 +3,8 @@ package br.com.hievents.entity.evento;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,9 +14,8 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import br.com.hievents.entity.anunciante.Anunciante;
+import br.com.hievents.enums.CategoriaEventoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,9 @@ public class Evento {
 	private String horario;
 	
 	private String banner;
+	
+	@Enumerated(EnumType.STRING)
+	private CategoriaEventoEnum categoria;
 
 	@ManyToOne
 	@JoinColumn(name="anunciante_id")

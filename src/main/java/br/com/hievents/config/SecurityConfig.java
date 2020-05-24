@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	                .antMatchers(HttpMethod.GET, "/eventos/**")
 	                    .permitAll()
 	            .and()
-	                .httpBasic();
+	                .formLogin().loginPage("/login");
 	        ;
 	    }
 }
